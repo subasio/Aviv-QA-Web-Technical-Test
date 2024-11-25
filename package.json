@@ -1,0 +1,27 @@
+{
+  "name": "aviv",
+  "version": "1.0.0",
+  "description": "aviv qa task",
+  "main": "index.js",
+  "scripts": {
+    "test": "env-cmd -e stage -r ./src/.env-cmdrc npx cucumber-js",
+    "encrypt": "node ./utils/crypto.js encrypt",
+    "decrypt": "node ./utils/crypto.js decrypt"
+  },
+  "author": "Elis Subasic",
+  "license": "unlicensed",
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.1.0",
+    "@playwright/test": "^1.48.0",
+    "@types/node": "^20.14.0",
+    "env-cmd": "^10.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
+    "winston": "^3.17.0"
+  },
+  "dependencies": {
+    "aviv": "file:",
+    "envalid": "^8.0.0",
+    "playwright": "^1.48.0"
+  }
+}

@@ -1,0 +1,24 @@
+# ---> VSCode
+.vscode
+
+# ---> IntelliJ Idea
+*.iml
+*.iws
+.idea
+/out/
+.idea_modules/
+atlassian-ide-plugin.xml
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+# ---> Allure
+allure-results
+
+# ---> NPM
+node_modules
+
+# ---> Reports
+test-results
+cucumber-report.html
