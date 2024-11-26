@@ -1,6 +1,9 @@
 import type { Page } from '@playwright/test'
 import { expect } from '@playwright/test'
-import { checkoutPage } from '../locators'
+import {
+    checkoutPage,
+    common
+} from '../locators'
 import logger from '../../../utils/logger'
 
 export default class CheckoutPage {
@@ -24,8 +27,15 @@ export default class CheckoutPage {
     paymentMethodStep = async () => this.page.locator(checkoutPage.paymentMethodStepId)
     paymentInfoStep = async () => this.page.locator(checkoutPage.paymentInfoStepId)
     confirmOrderStep = async () => this.page.locator(checkoutPage.confirmOrderStepId)
-    groundShippingPaymentMethodRadioBtn = async () => this.page.locator(checkoutPage.groundShippingMethodRadioBtnId)
+    groundShippingRadioBtn = async () => this.page.locator(checkoutPage.groundShippingRadioBtnId)
     shippingMethodContinueBtn = async () => this.page.locator(checkoutPage.shippingMethodContinueBtnXpath)
+    paymentMethodCheckRadioBtn = async () => this.page.locator(checkoutPage.paymentMethodCheckRadioBtnId)
+    paymentMethodContinueBtn = async () => this.page.locator(checkoutPage.paymentMethodContinueBtnXpath)
+    paymentInfoContinueBtn = async () => this.page.locator(checkoutPage.paymentInfoContinueBtnXpath)
+    paymentInfoText = async () => this.page.locator(checkoutPage.paymentInfoTextXpath)
+    orderItems = async () => this.page.locator(common.cartItemsXpath)
+    confirmOrderBtn = async () => this.page.locator(checkoutPage.confirmOrderBtnXpath)
+    orderConfirmationContinueBtn = async () => this.page.locator(checkoutPage.orderConfirmationContinueBtnCss)
     
     async checkCheckoutTitle() {
         const ele = await this.checkoutTitle()
@@ -119,38 +129,152 @@ export default class CheckoutPage {
         }
     }
 
-    async clickContinueBillingBtn() {
+    async clickBillingContinueBtn() {
         const ele = await this.billingContinueBtn()
 
         try {
             await ele?.click()
         } catch (error) {
-            throw new Error(`clickContinueBillingBtn step failed: ${error}`)
+            throw new Error(`clickBillingContinueBtn step failed: ${error}`)
         }
     }
 
-    async checkGroundShippingPaymentMethodRadioBtnChecked(): Promise<boolean> {
-        const ele = await this.groundShippingPaymentMethodRadioBtn()
-
+    async checkGroundShippingRadioBtn() {
         try {
+            const ele = await this.groundShippingRadioBtn();
+    
+            if (!ele) {
+                throw new Error('Ground shipping payment method radio button not found.')
+            }
+    
             const isChecked = await ele.isChecked()
-
-            if (isChecked) {
-                return true
+    
+            if (!isChecked) {
+                await ele.check()
+                logger.info('Ground shipping payment method radio button is now selected.')
+            } else {
+                logger.warn('Ground shipping payment method radio button is already selected.')
             }
         } catch (error) {
-            throw new Error(`checkGroundShippingPaymentMethodRadioBtnChecked step failed: ${error}`)
+            throw new Error(`checkGroundShippingRadioBtn step failed: ${error}`)
         }
-        return false
     }
 
-    async clickContinueShippingMethodBtn() {
-        const ele = await this.billingContinueBtn()
+    async clickShippingMethodContinueBtn() {
+        const ele = await this.shippingMethodContinueBtn()
 
         try {
             await ele?.click()
         } catch (error) {
-            throw new Error(`clickContinueShippingMethodBtn step failed: ${error}`)
+            throw new Error(`clickShippingMethodContinueBtn step failed: ${error}`)
+        }
+    }
+
+    async checkPaymentMethodCheckRadioBtn() {
+        try {
+            const ele = await this.paymentMethodCheckRadioBtn();
+    
+            if (!ele) {
+                throw new Error('Check payment method radio button not found.')
+            }
+    
+            const isChecked = await ele.isChecked()
+    
+            if (!isChecked) {
+                await ele.check()
+                logger.info('Check payment method radio button is now selected.')
+            } else {
+                logger.warn('Check payment method radio button is already selected.')
+            }
+        } catch (error) {
+            throw new Error(`checkPaymentMethodCheckRadioBtn step failed: ${error}`)
+        }
+    }
+
+    async clickPaymentMethodContinueBtn() {
+        const ele = await this.paymentMethodContinueBtn()
+
+        try {
+            await ele?.click()
+        } catch (error) {
+            throw new Error(`clickPaymentMethodContinueBtn step failed: ${error}`)
+        }
+    }
+
+    async clickPaymentInfoContinueBtn() {
+        try {
+            const ele = await this.paymentInfoText()
+            const ele1 = await this.paymentInfoContinueBtn()
+            const isVisible = await ele.isVisible()
+
+            if(!isVisible) {
+                throw new Error('paymentInfoText not found')
+            } else {
+                await ele1?.click()
+                logger.info('Click payment info continue button is now clicked.')
+            }
+        } catch (error) {
+            throw new Error(`clickPaymentInfoContinueBtn step failed: ${error}`)
+        }
+    }
+
+    async verifyOrder(expectedItemName: string, count: number): Promise<boolean> {
+        const item = this.page.locator(`//td[@class='product']//a[contains(text(), '${expectedItemName}')]`)
+        const itemsList = await this.orderItems()
+
+        try {
+            await expect(item).toBeVisible()
+            await expect(itemsList).toHaveCount(count)
+            return true
+        } catch (error) {
+            logger.error(`verifyOrder step failed: ${error}`)
+            return false
+        }
+    }
+
+    async clickConfirmOrderBtn(expectedItemName: string, count: number) {
+        try {
+            const ele = await this.verifyOrder(expectedItemName, count)
+
+            if(!ele) {
+                throw new Error('Confirm order not verified')
+            } else {
+                const ele1 = await this.confirmOrderBtn()
+                await ele1?.click()
+                logger.info('Confirm order button is now clicked.')
+            }
+        } catch (error) {
+            throw new Error(`clickConfirmOrderBtn step failed: ${error}`)
+        }
+    }
+
+    async verifyOrderConfirmation(): Promise<boolean> {
+        const ele = this.page.locator(`//h1[text()='Thank you']`)
+        const ele1 = this.page.locator(`//strong[text()='Your order has been successfully processed!']`)
+
+        try {
+            await expect(ele).toBeVisible()
+            await expect(ele1).toBeVisible()
+            return true
+        } catch (error) {
+            logger.error(`verifyOrderConfirmation step failed: ${error}`)
+            return false
+        }
+    }
+
+    async clickOrderConfirmationContinueBtn() {
+        try {
+            const ele = await this.verifyOrderConfirmation()
+
+            if(!ele) {
+                throw new Error('Order confirmation not verified')
+            } else {
+                const ele1 = await this.orderConfirmationContinueBtn()
+                await ele1?.click()
+                logger.info('Order confirmation continue button is now clicked.')
+            }
+        } catch (error) {
+            throw new Error(`clickOrderConfirmationContinueBtn step failed: ${error}`)
         }
     }
 }

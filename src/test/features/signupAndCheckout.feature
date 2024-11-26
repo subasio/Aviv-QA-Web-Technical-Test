@@ -4,7 +4,7 @@ Feature: User Registration and Checkout Process
  Of course all inputs and outputs are verified with successful or error messages rescpectively.
 
  @SignupAndCheckout
- Scenario Outline: User Signup and Checkout
+ Scenario Outline: User signup and checkout
 
   Given the user navigates to the website
   When the user clicks on the Register link
@@ -12,13 +12,16 @@ Feature: User Registration and Checkout Process
   Then the user should see a registration success message "Your registration completed"
   And the user should be redirected to the homepage
   Then the user logs in with the newly created user credentials using "<Email>" and "<Password>"
-  And the user adds a product "Fahrenheit 451 by Ray Bradbury" book to the shopping cart
-  And the user proceeds to the checkout process
+  And the user clicks on the Books link
+  And the user adds a "Fahrenheit 451 by Ray Bradbury" book to the shopping cart
+  And the user proceeds to the shopping cart and checkout process
   Then the user verifies the checkout process steps: Billing, Shipping, Payment
   And the user fills in the billing and shipping information and clicks continue
   And the user selects shipping method and clicks continue
-  # When the user clicks on the Confirm Order button
-  # Then the order should be successfully completed and the user should see the order confirmation message
+  And the user selects payment method and clicks continue
+  And the user validates the payment information and clicks continue
+  When the user clicks on the Confirm Order button
+  Then the order should be successfully completed and the user should see the order confirmation message
 
   Examples:
    | FirstName | LastName | Email                                                                                             | Password                                                          |

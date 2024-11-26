@@ -116,18 +116,23 @@ export default class RegistrationPage {
     async checkErrorMessage(message: string) {
         try {
             switch (message) {
-                case 'firstName':
-                expect (await this.firstNameErrorMsg()).toHaveText(message)
+                case 'First name is required.': {
+                await expect(await this.firstNameErrorMsg()).toHaveText(message)
                 break
-                case 'lastName':
-                expect (await this.lastNameErrorMsg()).toHaveText(message)
+                }
+                case 'Last name is required.':
+                await expect(await this.lastNameErrorMsg()).toHaveText(message)
                 break
-                case 'email':
-                expect (await this.emailErrorMsg()).toHaveText(message)
+                case 'Email is required.':
+                case 'Please enter a valid email address.':
+                await expect(await this.emailErrorMsg()).toHaveText(message)
                 break
-                case 'password':
-                expect (await this.passwordErrorMsg()).toHaveText(message)
+                case 'Password is required.':
+                case 'The password and confirmation password do not match.':
+                await expect(await this.passwordErrorMsg()).toHaveText(message)
                 break
+                default:
+                throw new Error('Unknown message type');
             }
         } catch (error) {
             throw new Error(`checkErrorMessage step failed: ${error}`)

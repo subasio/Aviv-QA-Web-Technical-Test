@@ -1,9 +1,12 @@
-import { Before, After } from '@cucumber/cucumber'
+import { Before,After, setDefaultTimeout } from '@cucumber/cucumber'
 import { TestStepResultStatus } from '@cucumber/messages'
-import { chromium, firefox, webkit, Browser, Page } from 'playwright'
+import { chromium, firefox, webkit, Browser, BrowserContext, Page } from 'playwright'
 import { GLOBALS } from '../test-set-up'
 
+setDefaultTimeout(30000)
+
 let browser: Browser
+let context: BrowserContext
 let page: Page
 
 Before(async function () {
@@ -25,7 +28,7 @@ Before(async function () {
         await page.setViewportSize({ width: 1920, height: 1080 })
         const cfClearanceCookie = {
             name: 'cf_clearance',
-            value: "aIgv1hzlLYeruzgIwZJF790je0ZSP_0mO9uUw4hr_ag-1732540770-1.2.1.1-j0LtMRIn.AOACXFRBr08XLnVV_hML8ld7uPnDQG5alsmGJH_0HstBMNac50IBt75h1jdbGrAMKjmX3OsY1OsibYmtg082M2iV6ZWeGR4b1jcQR.qp7N_P51aKNm2bBpP9OvaYPs9PDBxwvbatmZeTwptXfoFurJlxzWYAuDsK5YXH9xFJ7X9XDGR_9xb4Y4E8hZMyEHb.Ndc2xklKStF9jJgfNF.vsAvPLLZgz6jdhzgvr1oW4giFtAWUPccXWJopYIj7bbwIP4IsK6cfZUtfa8StflQAwIuF3x.2m9QspXcO6WyKYOLT4qIaOvIO87nzn0tmC_mPig_qTFt3C8HxtEl9PKpBE3O6yB_r.is5mpgFhF47FPc8dnEvRq2Z2EbII5q9rLgJF8S_McD6uRuLeSpBtHxeAyZD.Rum3SFdcE",
+            value: "TtU82p245dtkCYx.qXzhgvRBmgikAO6qYwbBLgNr7Og-1732641639-1.2.1.1-Hdlwhrdsx3VPS6cFSJy9Q1u1_Kcn88xV9bmZ4q.AINwlnl10FzRWKReoIP7yenRAqvuUHOd.nt53m3B88JJTBv2NcGYUhpwBLRfIt1PCcIrh3nBNDwZeXb6sJbKLZvX6R0uHrStp0Rkcdo6WcHLa7aucN6dH0xyiuVTIKxchDPQfAC1M.IsCf2InTSwqt.QYaKqS2ZguyLdMPllDufknMHVAogp7J88qOGVq6qaoQNqpZEna.MFqCIIw1uUVztsvEBSNzoZ.TmAUdmEdQMxnj3poM3U.7I1wrlDcIdK5LaXcLIiRU8U06ck2vTPA_wwSlMFtfLvyJtQpI8bdmCDRWEkYgAX2quldq0u.DTlle76wfelGh6.r4hTFfMwQdXtMQGiQCh.0LAfiqu2FT2dZnvXmLyzwERAJnmvAwJQvgWg",
             domain: '.nopcommerce.com',
             path: '/',
             httpOnly: true,
@@ -34,8 +37,10 @@ Before(async function () {
 
         // Add the cookie to the browser context.
         await context.addCookies([cfClearanceCookie])
-        this.page = page
         await page.goto(GLOBALS.env.URL)
+
+        this.context = context
+        this.page = page
     } catch (error) {
         throw new Error(`Error during opening home URL: ${error}`)
     }
@@ -59,6 +64,7 @@ After(async function (scenario) {
         throw new Error(`Error in after hook: ${error}`)
     } finally {
         if (page) await page.close()
+        if (context) await context.close()
         if (browser) await browser.close()
     }
 })

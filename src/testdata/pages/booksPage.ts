@@ -1,6 +1,6 @@
 import type { Page } from '@playwright/test'
 import { expect } from '@playwright/test'
-import { registrationPage } from '../locators'
+import { booksPage } from '../locators'
 
 export default class BooksPage {
     private readonly page: Page
@@ -9,7 +9,7 @@ export default class BooksPage {
         this.page = page
     }
 
-    booksTitle = async () => this.page.locator(registrationPage.titleXpath)
+    booksTitle = async () => this.page.locator(booksPage.titleXpath)
     
     async checkBooksTitle() {
         const ele = await this.booksTitle()
@@ -22,8 +22,7 @@ export default class BooksPage {
     }
 
     async addProductToCartBtn(product: string) {
-        const ele = this.page.locator(`//h2[@class='product-title']
-            //a[contains(text(), '${product}')]
+        const ele = this.page.locator(`//h2[@class='product-title']//a[contains(text(), '${product}')]
             /../..//button[@class='button-2 product-box-add-to-cart-button']`)
 
         try {

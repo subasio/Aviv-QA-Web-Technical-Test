@@ -1,11 +1,12 @@
+const common = [
+    'src/test/features/',
+    '--require-module ts-node/register',
+    '--require src/test/steps/*.ts',
+    '--require src/support/hooks.ts',
+    '--format html:cucumber-report.html',
+]
+
 module.exports = {
-    default: {
-        require: [
-            'src/test/steps/*.ts',
-            'src/support/hooks.ts'
-        ],
-        requireModule: ['ts-node/register'],
-        paths: ['src/test/features/'],
-        format: ['html:cucumber-report.html']
-    },
+    default: common.join(' '),
+    parallel: 1, // Number of parallel workers
 }

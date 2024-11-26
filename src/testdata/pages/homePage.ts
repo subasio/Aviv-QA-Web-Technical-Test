@@ -25,12 +25,14 @@ export default class HomePage {
         const ele1 = await this.registrationLnk()
         const ele2 = await this.logoutLnk()
         const ele3 = await this.myAccountLnk()
+        const ele4 = await this.booksLinkLnk()
 
         try {
             await expect(ele).toBeVisible()
             await expect(ele1).toBeVisible()
             await expect(ele2).toBeHidden()
             await expect(ele3).toBeHidden()
+            await expect(ele4).toBeVisible()
         } catch (error) {
             throw new Error(`checkHomePageNotLoggedInDisplayed step failed: ${error}`)
         }
@@ -41,12 +43,14 @@ export default class HomePage {
         const ele1 = await this.registrationLnk()
         const ele2 = await this.logoutLnk()
         const ele3 = await this.myAccountLnk()
+        const ele4 = await this.booksLinkLnk()
 
         try {
             await expect(ele).toBeHidden()
             await expect(ele1).toBeHidden()
             await expect(ele2).toBeVisible()
             await expect(ele3).toBeVisible()
+            await expect(ele4).toBeVisible()
             return true
         } catch (error) {
             logger.error(`checkHomePageLoggedInDisplayed step failed: ${error}`)
@@ -95,12 +99,20 @@ export default class HomePage {
     }
 
     async clickLogoutLnk() {
-        const isLoggedIn = await this.checkHomePageLoggedInDisplayed()
-        const ele = await this.logoutLnk()
-
         try {
+            const isLoggedIn = await this.checkHomePageLoggedInDisplayed()
+
             if (isLoggedIn) {
-            await ele?.click()
+                const ele = await this.logoutLnk()
+
+                if (ele) {
+                    await ele.click()
+                    logger.info('Logout link clicked successfully.')
+                } else {
+                    throw new Error('Logout link not found on the page.')
+                }
+            } else {
+                logger.warn('User is not logged in; skipping logout.')
             }
         } catch (error) {
             throw new Error(`clickLogoutLnk step failed: ${error}`)

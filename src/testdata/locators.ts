@@ -41,8 +41,8 @@ export const notificationBar = {
 }
 
 export const shoppingCartPage = {
-    cartItemsXpath: '//table[@class=\'cart\']/tbody/tr',
     checkoutBtnId: '//*[@id=\'checkout\']',
+    orderTotalXpath: '//tr[@class=\'order-total\']//span[@class=\'value-summary\']',
     termsOfServiceCheckBoxId: '//*[@id=\'termsofservice\']',
     titleXpath: '//h1[text()=\'Shopping cart\']'
 }
@@ -52,9 +52,15 @@ export const checkoutPage = {
     billingContinueBtnXpath: '//*[@id=\'billing-buttons-container\']/button[text()=\'Continue\']',
     billingAddressStepId: '//*[@id=\'checkout-step-billing\']',
     cityFieldId: '//*[@id=\'BillingNewAddress_City\']',
+    confirmOrderBtnXpath: '//*[@id=\'confirm-order-buttons-container\']/button[text()=\'Confirm\']',
     confirmOrderStepId: '//*[@id=\'checkout-step-confirm-order\']',
-    groundShippingMethodRadioBtnId: '//*[@id=\'shippingoption_0\']',
+    groundShippingRadioBtnId: '//*[@id=\'shippingoption_0\']',
+    orderConfirmationContinueBtnCss: 'css=.button-1.order-completed-continue-button',
+    paymentInfoContinueBtnXpath: '//*[@id=\'payment-info-buttons-container\']/button[text()=\'Continue\']',
     paymentInfoStepId: '//*[@id=\'checkout-step-payment-info\']',
+    paymentInfoTextXpath: '//p[contains(text(),\'Mail Personal or Business Check\')]',
+    paymentMethodCheckRadioBtnId: '//*[@id=\'paymentmethod_0\']',
+    paymentMethodContinueBtnXpath: '//*[@id=\'payment-method-buttons-container\']/button[text()=\'Continue\']',
     paymentMethodStepId: '//*[@id=\'checkout-step-payment-method\']',
     phoneNumberFieldId: '//*[@id=\'BillingNewAddress_PhoneNumber\']',
     postalCodeFieldId: '//*[@id=\'BillingNewAddress_ZipPostalCode\']',
@@ -66,29 +72,7 @@ export const checkoutPage = {
     titleXpath: '//h1[text()=\'Checkout\']'
 }
 
-export const checkoutOverviewPage = {
-    finishBtnId: '//*[@id=\'finish\']',
-    titleXpath: '//span[@class=\'title\' and text()=\'Checkout: Overview\']'
-}
-
-export const checkoutCompletePage = {
-    backHomeBtnId: '//*[@id=\'back-to-products\']',
-    orderDispatchedMessageXpath: '//*[contains (text(), \'Your order has been dispatched\')]',
-    thankYouMessageXpath: '//h2[text()=\'Thank you for your order!\']',
-    titleXpath: '//span[@class=\'title\' and text()=\'Checkout: Complete!\']'
-}
-
 export const common = {
-    cancelBtnId: '//*[@id=\'cancel\']',
-    cartBadgeItemsCountXpath: '//span[@class=\'shopping_cart_badge\']',
-    cartBtnId: '//*[@id=\'shopping_cart_container\']',
-    cartItemNameXpath: '//*[@class=\'inventory_item_name\']',
-    cartItemsXpath: '//*[@class=\'cart_item\']',
+    cartItemsXpath: '//table[@class=\'cart\']/tbody/tr',
     errorMessageWarningCss: 'css=.message-error.validation-summary-errors',
-    menuBtnAboutXpath: '//a[@id=\'about_sidebar_link\' and text()=\'About\']',
-    menuBtnAllItemsXpath: '//a[@id=\'inventory_sidebar_link\' and text()=\'All Items\']',
-    menuBtnId: '//*[@class=\'bm-burger-button\']',
-    menuBtnXpath: '//*[@class=\'bm-burger-button\']',
-    menuBtnLogoutXpath: '//a[@id=\'logout_sidebar_link\' and text()=\'Logout\']',
-    menuBtnResetAppStateXpath: '//a[@id=\'reset_sidebar_link\' and text()=\'Reset App State\']',
 }
