@@ -87,7 +87,7 @@
     Cucumber Scenario Outlines have been specifically implemented to iterate over the same test with different data sets, allowing for comprehensive test coverage with minimal duplication of code.
   
   2. **Environmental configurations**
-    The environmental configuration is completely done through just one file
+    The environmental configuration is completely done through just one file\
     `.env-cmdrc` where all of the desired environment configurations can be
     defined (e.g. **dev**, **staging**, **prod**, etc...).\
     Sensitive data is of course **encrypted**.
