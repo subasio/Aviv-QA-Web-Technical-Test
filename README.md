@@ -22,7 +22,8 @@
   - Set the **ENCRYPTION_KEY** as your system environment variable with the value of `RGJ3j4moAdemMYuFlc9d5NcBp1RB8GRy`\
   (**DISCLAIMER - this is just for this demo testing purposes, never ever under any circumstances share your private keys publicly!!!**)
   - Clone respective repository or download zip.
-  - Acquire the newest `cf_clearance` cookie from browser's dev tools then go to your project directory from powershell or terminal and run the following command to encrypt it: `npm run encrypt -- "<paste cf_clearance cookie value here>"` and then paste the encrypted value in a file here: `./src/test-set-up.ts` under `CF_CLEARANCE => default`
+  - Acquire the newest `cf_clearance` cookie from browser's dev tools then go to your project directory from powershell or terminal and run the following command
+    to encrypt it: `npm run encrypt -- "<paste cf_clearance cookie value here>"` and then paste the encrypted value in a file here: `./src/test-set-up.ts` under `CF_CLEARANCE => default`
 
 **IMPORTANT NOTE:**\
   If you don't want to mess with separate browser installation just run the `npx playwright install` command in terminal which will then install majority of the playwright browsers needed for testing purposes.
@@ -38,9 +39,11 @@
   The project includes a GitHub Actions CI/CD pipeline that runs on each push or pull request. This setup helps in maintaining code quality and ensures that tests are executed consistently on the repository.
 
   **Important Note**
-  The CI-CD configuration is implemented through just one `.yml` file located under `./.github/workflows/ci/ci-cd.yml`.
-  The same rule applies here also meaning that `cf_clearance` cookie needs to be aquired before any CI-CD run, otherwhise the CI-CD won't run. 
-  **Again since the site is as mentioned before heavily protected by the CLOUDFLARE BOT reCaptcha even setting the cf_clearance cookie won't work since the  CLOUDFLARE BOT reCaptcha detects the GitHub Actions as automated tests being run and blocks it. This is especially the case if HEADLESS mode is turned off!!!**
+  The CI-CD configuration is implemented through just one `.yml` file located under `./.github/workflows/ci/ci-cd.yml`.\
+  The same rule applies here also meaning that `cf_clearance` cookie needs to be aquired before any CI-CD run, otherwhise the CI-CD won't run.\
+  **Again since the site is as mentioned before heavily protected by the CLOUDFLARE BOT reCaptcha even setting the cf_clearance cookie won't work 
+  since the CLOUDFLARE BOT reCaptcha detects the GitHub Actions as automated tests being run and blocks it.\
+  This is especially the case if HEADLESS mode is turned off!!!**
 
 ## Reports
   * [Allure reports](https://qameta.io/allure-report/)
@@ -63,19 +66,21 @@
   but nothing of these options worked.
 
   **Short term workaround**\
-  The only option which worked at least for a short period of time was injecting only the `cf_clearance` cookie but since the **Cloudflare bot reCaptcha** is been upgraded constantly with option of adding your IP address to his known list of hosts to be blocked this was also only 
+  The only option which worked at least for a short period of time was injecting only the `cf_clearance` cookie but since\
+  the **Cloudflare bot reCaptcha** is been upgraded constantly with option of adding your IP address to his known list of hosts to be blocked this was also only 
   working for a short period of time, if any at all.
   
   **Recommendation and best practice**\
-  Since all of the possible workaround options are only short term or not usefull at all, then for real testing purposes in a **controlled environment** it is recommended to **completely turn off** protection while tesing is in progress.
-  Of course leaving the all other possible protections on to still be able to prevent unauthorized use access.
+  Since all of the possible workaround options are only short term or not usefull at all, then for real testing purposes in a **controlled environment** it is recommended to **completely turn off** protection while testing is in progress.\
+  Of course leaving the all other possible protections on to still be able to prevent unauthorized use access.\
   The best solution to have this protection and still be able to stay protected and test is to use some of the professional and paid products like [ZenRows](https://www.zenrows.com/) which work on a concept of rotating proxies and 
-  headless browsers to CAPTCHAs and AI.
-  Or to make it super easy my recommendation would be to switch to using [SWAGLABS](https://www.saucedemo.com/) web app instead.\ 
+  headless browsers to CAPTCHAs and AI.\
+  Or to make it super easy my recommendation would be to switch to using [SWAGLABS](https://www.saucedemo.com/) web app instead.\
   The app is of the same purchase context, ultra optimized, efficient and performant for use with almost every known browser and **bot protected free**.
 
   **PLEASE KEEP IN MIND!!!**\
-  **I could not finish running and validating all of the tests because of the previously mentioned blocker problem with CLOUDFLARE BOT reCaptcha so there could be tests which are failing.**
+  **I could not finish running and validating all of the tests because of the previously mentioned blocker problem with\
+  CLOUDFLARE BOT reCaptcha so there could be tests which are failing.**
 
 ## Future Improvements
   There are several areas where the project could be enhanced:
