@@ -2,6 +2,9 @@ import { Before,After, setDefaultTimeout } from '@cucumber/cucumber'
 import { TestStepResultStatus } from '@cucumber/messages'
 import { chromium, firefox, webkit, Browser, BrowserContext, Page } from 'playwright'
 import { GLOBALS } from '../test-set-up'
+import { decrypt } from '../../utils/crypto'
+import path from 'path'
+import fs from 'fs'
 
 setDefaultTimeout(30000)
 
@@ -28,7 +31,7 @@ Before(async function () {
         await page.setViewportSize({ width: 1920, height: 1080 })
         const cfClearanceCookie = {
             name: 'cf_clearance',
-            value: "TtU82p245dtkCYx.qXzhgvRBmgikAO6qYwbBLgNr7Og-1732641639-1.2.1.1-Hdlwhrdsx3VPS6cFSJy9Q1u1_Kcn88xV9bmZ4q.AINwlnl10FzRWKReoIP7yenRAqvuUHOd.nt53m3B88JJTBv2NcGYUhpwBLRfIt1PCcIrh3nBNDwZeXb6sJbKLZvX6R0uHrStp0Rkcdo6WcHLa7aucN6dH0xyiuVTIKxchDPQfAC1M.IsCf2InTSwqt.QYaKqS2ZguyLdMPllDufknMHVAogp7J88qOGVq6qaoQNqpZEna.MFqCIIw1uUVztsvEBSNzoZ.TmAUdmEdQMxnj3poM3U.7I1wrlDcIdK5LaXcLIiRU8U06ck2vTPA_wwSlMFtfLvyJtQpI8bdmCDRWEkYgAX2quldq0u.DTlle76wfelGh6.r4hTFfMwQdXtMQGiQCh.0LAfiqu2FT2dZnvXmLyzwERAJnmvAwJQvgWg",
+            value: decrypt(GLOBALS.env.CF_CLEARANCE),
             domain: '.nopcommerce.com',
             path: '/',
             httpOnly: true,
@@ -50,15 +53,12 @@ After(async function (scenario) {
     try {
         // Check if the scenario failed
         if (scenario.result?.status === TestStepResultStatus.FAILED) {
-            // const sanitizedScenarioName = scenario.pickle.name.replace(/[^a-zA-Z0-9_-]/g, '_')
-            const screenshotBuffer = await page.screenshot({ fullPage: true })
-            
-            // Attach the screenshot to the Cucumber report
-            this.attach(screenshotBuffer, 'image/png')
+            // Capture a screenshot when a test fails
+            const screenshotPath = path.join(__dirname, `../../allure-results/${scenario.pickle.name.replace(/\s+/g, '_')}.png`)
+            await page.screenshot({ path: screenshotPath })
 
-            // // Optional: Save the screenshot locally for debugging
-            // const screenshotPath = path.resolve(__dirname, `../screenshots/${sanitizedScenarioName}.png`)
-            // fs.writeFileSync(screenshotPath, screenshotBuffer)
+            // Attach the screenshot to Allure report
+            this.attach(fs.readFileSync(screenshotPath), 'image/png')
         }
     } catch (error) {
         throw new Error(`Error in after hook: ${error}`)

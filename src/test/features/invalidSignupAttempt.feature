@@ -1,6 +1,6 @@
-Feature: User Registration and Checkout Process
+Feature: User invalid signup attempt
  This feature tests the unsuccessful user registration process attempts.
- Of course all inputs and outputs are verified with successful or error messages rescpectively.
+ Of course all inputs and outputs are verified with successful or error messages respectively.
 
   @InvalidSignupAttempt
   Scenario Outline: Signup with invalid user information

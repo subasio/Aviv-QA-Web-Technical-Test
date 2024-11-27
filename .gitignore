@@ -22,3 +22,4 @@ node_modules
 # ---> Reports
 test-results
 cucumber-report.html
+allure-results

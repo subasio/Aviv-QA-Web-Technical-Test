@@ -1,7 +1,7 @@
 Feature: User Registration and Checkout Process
  This feature tests the successful user registration and checkout process.
  It also covers the complete user flow from registration to successful product checkout.
- Of course all inputs and outputs are verified with successful or error messages rescpectively.
+ Of course all inputs and outputs are verified with successful or error messages respectively.
 
  @SignupAndCheckout
  Scenario Outline: User signup and checkout

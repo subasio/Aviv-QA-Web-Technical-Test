@@ -21,11 +21,24 @@ Then('the user verifies book {string} with quantity {string} in cart',
         await shoppingCartPage.shoppingCartTotal('$102.00')
 })
 
-When('the user modifies the quantity of a {string} book',
-    async function (product: string) {
-        const shoppingCartPage = new ShoppingCartPage(this.page)
-        await shoppingCartPage.shoppingCartItemNameAndQuantityCheck(product, '1')
-        await shoppingCartPage.clickShoppingCartItemQuantityUpBtn(product)
-        await shoppingCartPage.shoppingCartItemNameAndQuantityCheck(product, '2')
-        await shoppingCartPage.shoppingCartTotal('$129.00')
+When('the user modifies the quantity of a {string} book', async function (product: string) {
+    const shoppingCartPage = new ShoppingCartPage(this.page)
+    await shoppingCartPage.shoppingCartItemNameAndQuantityCheck(product, '1')
+    await shoppingCartPage.clickShoppingCartItemQuantityUpBtn(product)
+    await shoppingCartPage.shoppingCartItemNameAndQuantityCheck(product, '2')
+    await shoppingCartPage.shoppingCartTotal('$129.00')
+})
+
+When('the user removes a {string} book from the cart', async function (product: string) {
+    const shoppingCartPage = new ShoppingCartPage(this.page)
+    shoppingCartPage.removeItemFromShoppingCart(product)
+})
+
+Then('the cart is updated accordingly', async function () {
+    const shoppingCartPage = new ShoppingCartPage(this.page)
+    await shoppingCartPage.itemNotPresentInTheShoppingCartCheck('Fahrenheit 451 by Ray Bradbury')
+    await shoppingCartPage.shoppingCartItemsCountCheck(2)
+    await shoppingCartPage.shoppingCartItemNameAndQuantityCheck('First Prize Pies', '1')
+    await shoppingCartPage.shoppingCartItemNameAndQuantityCheck('Pride and Prejudice', '1')
+    await shoppingCartPage.shoppingCartTotal('$75.00')
 })

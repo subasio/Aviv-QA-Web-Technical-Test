@@ -36,6 +36,9 @@ Feature: User login and checkout with cart functionality verification
   And the user clicks on the Shopping cart link
   Then the user verifies book "<Book>" with quantity "<Quantity>" in cart
   When the user modifies the quantity of a "Fahrenheit 451 by Ray Bradbury" book
+  And the user removes a "Fahrenheit 451 by Ray Bradbury" book from the cart
+  Then the cart is updated accordingly
+
 
   Examples:
    | Book                            | Quantity |

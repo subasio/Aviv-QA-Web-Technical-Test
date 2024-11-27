@@ -1,9 +1,6 @@
 import type { Page } from '@playwright/test'
 import { expect } from '@playwright/test'
-import {
-    checkoutPage,
-    common
-} from '../locators'
+import { checkoutPage, common } from '../locators'
 import logger from '../../../utils/logger'
 
 export default class CheckoutPage {

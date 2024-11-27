@@ -1,6 +1,7 @@
 import type { Page } from '@playwright/test'
 import { expect } from '@playwright/test'
 import { registrationPage } from '../locators'
+import logger from '../../../utils/logger'
 
 export default class RegistrationPage {
     private readonly page: Page
@@ -97,6 +98,7 @@ export default class RegistrationPage {
         const ele = await this.registrationSuccessMsg()
 
         try {
+            logger.info('User successfully registered.')
             return await ele?.textContent()
         } catch (error) {
             throw new Error(`checkRegistrationSuccessMessage step failed: ${error}`)

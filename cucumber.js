@@ -3,7 +3,8 @@ const common = [
     '--require-module ts-node/register',
     '--require src/test/steps/*.ts',
     '--require src/support/hooks.ts',
-    '--format html:cucumber-report.html',
+    '--format allure-cucumberjs/reporter',
+    '--format-options \'{"resultsDir": "allure-results"}\''
 ]
 
 module.exports = {

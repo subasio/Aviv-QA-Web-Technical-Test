@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "env-cmd -e stage -r ./src/.env-cmdrc npx cucumber-js",
+    "test:firefox": "env-cmd -e stage:firefox -r ./src/.env-cmdrc npx cucumber-js",
+    "test:webkit": "env-cmd -e stage:webkit -r ./src/.env-cmdrc npx cucumber-js",
     "encrypt": "node ./utils/crypto.js encrypt",
     "decrypt": "node ./utils/crypto.js decrypt"
   },
@@ -12,8 +14,10 @@
   "license": "unlicensed",
   "devDependencies": {
     "@cucumber/cucumber": "^11.1.0",
+    "@cucumber/messages": "^27.0.2",
     "@playwright/test": "^1.48.0",
     "@types/node": "^20.14.0",
+    "allure-cucumberjs": "^3.0.6",
     "env-cmd": "^10.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",

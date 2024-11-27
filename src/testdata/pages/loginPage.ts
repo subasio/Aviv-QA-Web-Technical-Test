@@ -1,9 +1,6 @@
 import type { Page } from '@playwright/test'
 import { expect } from '@playwright/test'
-import {
-    common,
-    loginPage
-} from '../locators'
+import { common, loginPage } from '../locators'
 
 export default class LoginPage {
     private readonly page: Page
