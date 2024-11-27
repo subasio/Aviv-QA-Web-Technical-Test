@@ -69,9 +69,9 @@
   but nothing of these options worked.
 
   **Short term workaround**\
-  The only option which worked at least for a short period of time was injecting only the `cf_clearance` cookie but since\
-  the **Cloudflare bot reCaptcha** is been upgraded constantly with option of adding your IP address to his known list of hosts to be blocked this was also only 
-  working for a short period of time, if any at all.
+  The only option which worked at least for a short period of time was injecting only the `cf_clearance` cookie but since the\
+  **Cloudflare bot reCaptcha** is been upgraded constantly with option of adding your IP address 
+  to his known list of hosts to be blocked this was also only working for a short period of time, if any at all.
   
   **Recommendation and best practice**\
   Since all of the possible workaround options are only short term or not usefull at all, then for real testing purposes in a **controlled environment** it is recommended to **completely turn off** protection while testing is in progress.\
