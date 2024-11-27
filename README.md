@@ -23,7 +23,9 @@
   (**DISCLAIMER - this is just for this demo testing purposes, never ever under any circumstances share your private keys publicly!!!**)
   - Clone respective repository or download zip.
   - Acquire the newest `cf_clearance` cookie from browser's dev tools then go to your project directory from powershell or terminal and run the following command
-    to encrypt it: `npm run encrypt -- "<paste cf_clearance cookie value here>"` and then paste the encrypted value in a file here: `./src/test-set-up.ts` under `CF_CLEARANCE => default`
+    to encrypt it:\
+    `npm run encrypt -- "<paste cf_clearance cookie value here>"`\
+    and then paste the encrypted value in a file here: `./src/test-set-up.ts` under `CF_CLEARANCE => default`
 
 **IMPORTANT NOTE:**\
   If you don't want to mess with separate browser installation just run the `npx playwright install` command in terminal which will then install majority of the playwright browsers needed for testing purposes.
@@ -53,7 +55,8 @@
       the modules and their features/steps can be found (screenshots for the failed tests/steps included).
     * In case you have both [npm](https://www.npmjs.com/) and [maven](https://maven.apache.org/download.cgi) installed
       on your system sometimes there can be a problem when running the `allure serve` command, if that happens please
-      run the command `npm install -g allure-commandline --save-dev` and then try again.
+      run the command:\
+      `npm install -g allure-commandline --save-dev` and then try again.
 
 ## Issues and Challenges
   **Cloudflare bot protection reCaptcha**\
@@ -108,7 +111,7 @@
     Sensitive data is of course **encrypted**.
   
   4. **Parallel test execution**
-    To run multithreaded (parallel) tests in a Cucumber project, you can utilize Cucumber's parallel execution capabilities along with Playwright's inherent concurrency support.
+    To run multithreaded (parallel) tests in a Cucumber project, you can utilize Cucumber's parallel execution capabilities along with Playwright's inherent concurrency support.\
     **Current parallel configuration example (inside cucumber.js file):**
     <pre> <code> ```module.exports = { default: common.join(' '), parallel: 1, // Number of parallel workers }``` </code> </pre>
     Edit the `parallel` property to enable multithreading with X workers. This number can be adjusted based on your CPU capacity or test needs.
