@@ -13,13 +13,8 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-# ---> Allure
-allure-results
-
 # ---> NPM
 node_modules
 
-# ---> Reports
-test-results
-cucumber-report.html
+# ---> Allure reports
 allure-results
